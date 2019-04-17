@@ -1,27 +1,3 @@
-// let on = false;
-
-// function uni(chan = Array(512).fill(0)){
-//   return Uint8Array.from([0x7e, 0x06, 513 & 0xff, (513 >> 8) & 0xff, 0x00].concat(chan, [0xe7]));
-// }
-
-// var e = uni();
-
-// .then(function(){
-// 	clock = setInterval(() => {
-// 		if (on) {
-// 			on = false;
-// 			self.device.transferOut(2, uni(Array(512).fill(0)));
-// 			console.log('off');
-// 		} else {
-// 			on = true;
-// 			self.device.transferOut(2, uni(Array(512).fill(255)));
-// 			console.log('on');
-// 		}
-// 	}, 1000);
-// })
-
-// DMX.JS API
-
 let rti = false;
 
 function WebUSBSerialPort(options) {
@@ -147,7 +123,12 @@ function WebUSBSerialPort(options) {
 	});	
 }
 
-var DMX = new WebUSBSerialPort({filters: [{ vendorId: 0x0403, productId: 0x6001 }]});
+if ("usb" in navigator) {
+	var DMX = new WebUSBSerialPort({filters: [{ vendorId: 0x0403, productId: 0x6001 }]});
+}
+else {
+	alert("This browser doesn’t support WebUSB. Read more about the technology below, but switch to the latest version of Chrome or Opera to try the demos");
+}
 
 const myConsole = document.querySelector("#console-input");
 const executeBtn = document.querySelector("#execute");
